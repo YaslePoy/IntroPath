@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -12,15 +10,16 @@ public partial struct PlayerMovementSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
     }
+
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
         var horizontal = Input.GetAxis("Horizontal");
         var moveVec = new float3(horizontal, 0, 0) * Time.deltaTime;
 
-        foreach(var (player, settings) in SystemAPI.Query<RefRW<LocalTransform>, RefRO<Player>>())
+        foreach ((RefRW<LocalTransform> player, RefRO<Player> settings) in SystemAPI.Query<RefRW<LocalTransform>, RefRO<Player>>())
         {
-            var move = moveVec * settings.ValueRO.moveSpeed;
+            var move = moveVec * settings.ValueRO.MoveSpeed;
             var newPos = player.ValueRO.Position + move;
             player.ValueRW.Position = newPos;
         }

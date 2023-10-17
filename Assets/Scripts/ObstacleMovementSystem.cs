@@ -1,13 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 
 public partial struct ObstacleMovementSystem : ISystem
 {
+    public void OnCreate(ref SystemState state)
+    {
+        state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
+    }
+
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
@@ -33,12 +35,12 @@ public partial struct ObstacleJob : IJobEntity
 {
     public EntityCommandBuffer ECB;
     public float DeltaTime;
+
     void Execute(Entity entity, ref LocalTransform transform, ref Obstacle obstacle)
     {
         if (transform.Position.z > -1)
-            transform.Position = transform.Position - new float3(0, 0, obstacle.speed * DeltaTime);
+            transform.Position = transform.Position - new float3(0, 0, obstacle.Speed * DeltaTime);
         else
             ECB.DestroyEntity(entity);
-
     }
 }

@@ -16,14 +16,14 @@ public class ObstacleAuthoring : MonoBehaviour
             var entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new Obstacle
             {
-                speed = authoring.fligtSpeed,
-                damage = authoring.damage
+                Speed = authoring.fligtSpeed,
+                Damage = authoring.damage
             });
         }
     }
 }
 public struct Obstacle : IComponentData
 {
-    public float speed;
-    public float damage;
+    public float Speed;
+    public float Damage;
 }

@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class PlayerAuthoring : MonoBehaviour
 {
-        public float moveSpeed;
+    public float moveSpeed;
 
     class Baker : Baker<PlayerAuthoring>
     {
@@ -16,12 +13,13 @@ public class PlayerAuthoring : MonoBehaviour
             var entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new Player
             {
-                moveSpeed = authoring.moveSpeed,
+                MoveSpeed = authoring.moveSpeed,
             });
         }
     }
 }
+
 public struct Player : IComponentData, IEnableableComponent
 {
-    public float moveSpeed;
+    public float MoveSpeed;
 }

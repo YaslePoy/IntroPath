@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Physics;
@@ -19,11 +17,12 @@ public partial struct CollisionHandleSystem : ISystem
     {
         //Debug.Log("On Update!!!!");
 
-        state.Dependency = new CollisionJob
-        {
-        }.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
+        var job = new CollisionJob();
+
+        state.Dependency = job.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
     }
 }
+
 [BurstCompile]
 public struct CollisionJob : ICollisionEventsJob
 {
