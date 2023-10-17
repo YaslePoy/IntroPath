@@ -1,12 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using Unity.Entities;
 using UnityEngine;
 
+public struct Config : IComponentData
+{
+    public float spawnRate;
+    public Entity ObstaclePrefab;
+}
+
 public class SpawnConfig : MonoBehaviour
 {
-    public float Spawn;
+    public float SpawnRate;
     public GameObject obstacleModel;
+
     class Baker : Baker<SpawnConfig>
     {
         public override void Bake(SpawnConfig authoring)
@@ -15,14 +20,9 @@ public class SpawnConfig : MonoBehaviour
             var entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new Config
             {
-                spawnRate = authoring.Spawn,
+                spawnRate = authoring.SpawnRate,
                 ObstaclePrefab = GetEntity(authoring.obstacleModel, TransformUsageFlags.Dynamic)
             });
         }
     }
-}
-public struct Config : IComponentData
-{
-    public float spawnRate;
-    public Entity ObstaclePrefab;
 }
