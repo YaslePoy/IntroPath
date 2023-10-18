@@ -28,6 +28,6 @@ public struct CollisionJob : ICollisionEventsJob
 {
     public void Execute(CollisionEvent collisionEvent)
     {
-        Debug.Log("realy !!!!");
+        Debug.Log("CollisionEvent !!!!");
     }
 }

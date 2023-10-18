@@ -149,8 +149,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c0196dfe85ae24418fce8adba6e3941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpawnRate: 0.9
-  obstacleModel: {fileID: 4322569809789886779, guid: eb9ff7a7182778043badd88816e932a9,
+  SpawnRate: 0.95
+  obstacleModel: {fileID: 7328031450093771970, guid: 2eda61381932a7049991d0021702df3b,
     type: 3}
 --- !u!4 &254086734
 Transform:
