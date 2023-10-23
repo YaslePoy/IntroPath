@@ -13,34 +13,34 @@ public partial struct ObstacleMovementSystem : ISystem
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
     {
-        var t = SystemAPI.Time.DeltaTime;
-        //foreach (var (obst,settings) in SystemAPI.Query<RefRW<LocalTransform>, RefRO<Obstacle>>())
+        //var t = SystemAPI.Time.DeltaTime;
+        ////foreach (var (obst,settings) in SystemAPI.Query<RefRW<LocalTransform>, RefRO<Obstacle>>())
+        ////{
+        ////    var start = obst.ValueRO.Position;
+        ////    start.z -= settings.ValueRO.speed * t;
+        ////    obst.ValueRW.Position = start;
+        ////}
+        //var ecb = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
+        //var job = new ObstacleJob
         //{
-        //    var start = obst.ValueRO.Position;
-        //    start.z -= settings.ValueRO.speed * t;
-        //    obst.ValueRW.Position = start;
-        //}
-        var ecb = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
-        var job = new ObstacleJob
-        {
-            ECB = ecb.CreateCommandBuffer(state.WorldUnmanaged),
-            DeltaTime = t
-        };
-        job.Schedule();
+        //    ECB = ecb.CreateCommandBuffer(state.WorldUnmanaged),
+        //    DeltaTime = t
+        //};
+        //job.Schedule();
     }
 }
 
-[BurstCompile]
-public partial struct ObstacleJob : IJobEntity
-{
-    public EntityCommandBuffer ECB;
-    public float DeltaTime;
+//[BurstCompile]
+//public partial struct ObstacleJob : IJobEntity
+//{
+//    public EntityCommandBuffer ECB;
+//    public float DeltaTime;
 
-    void Execute(Entity entity, ref LocalTransform transform, ref Obstacle obstacle)
-    {
-        if (transform.Position.z > -1)
-            transform.Position = transform.Position - new float3(0, 0, obstacle.Speed * DeltaTime);
-        else
-            ECB.DestroyEntity(entity);
-    }
-}
+//    void Execute(Entity entity, ref LocalTransform transform, ref Enemy obstacle)
+//    {
+//        if (transform.Position.z > -1)
+//            transform.Position = transform.Position - new float3(0, 0, obstacle.Speed * DeltaTime);
+//        else
+//            ECB.DestroyEntity(entity);
+//    }
+//}

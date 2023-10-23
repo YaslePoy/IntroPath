@@ -3,15 +3,14 @@ using UnityEngine;
 
 public struct Config : IComponentData
 {
-    public float spawnRate;
-    public Entity ObstaclePrefab;
+    public Entity EnemyPrefab;
+    public int TotalCount;
 }
 
 public class SpawnConfig : MonoBehaviour
 {
-    public float SpawnRate;
-    public GameObject obstacleModel;
-
+    public GameObject enemyModel;
+    public int count;
     class Baker : Baker<SpawnConfig>
     {
         public override void Bake(SpawnConfig authoring)
@@ -20,9 +19,9 @@ public class SpawnConfig : MonoBehaviour
             var entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new Config
             {
-                spawnRate = authoring.SpawnRate,
-                ObstaclePrefab = GetEntity(authoring.obstacleModel, TransformUsageFlags.Dynamic)
-            });
+                EnemyPrefab = GetEntity(authoring.enemyModel, TransformUsageFlags.Dynamic),
+                TotalCount = authoring.count
+            }) ;
         }
     }
 }
