@@ -1,3 +1,4 @@
+using System;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Physics;
@@ -17,7 +18,7 @@ public partial struct CollisionHandleSystem : ISystem
     {
         //Debug.Log("On Update!!!!");
 
-        var job = new CollisionJob();
+        var job = new CollisionJob() { ECB = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>().CreateCommandBuffer(state.WorldUnmanaged) };
 
         state.Dependency = job.Schedule(SystemAPI.GetSingleton<SimulationSingleton>(), state.Dependency);
     }
@@ -26,8 +27,12 @@ public partial struct CollisionHandleSystem : ISystem
 [BurstCompile]
 public struct CollisionJob : ICollisionEventsJob
 {
+    public EntityCommandBuffer ECB;
     public void Execute(CollisionEvent collisionEvent)
     {
-        Debug.Log("CollisionEvent !!!!");
+        Debug.Log($"[{DateTime.Now}]CollisionEvent !!!! {collisionEvent.EntityA.Index} and {collisionEvent.EntityB.Index}");
+        ECB.DestroyEntity(collisionEvent.EntityA);
+        ECB.DestroyEntity(collisionEvent.EntityB);
+
     }
 }
