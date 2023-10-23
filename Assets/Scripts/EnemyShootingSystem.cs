@@ -36,11 +36,11 @@ public partial struct EnemyShootingSystem : ISystem
             delta /= len;
 
             var cfg = SystemAPI.GetSingleton<MissleConfig>();
-            var missle = state.EntityManager.Instantiate(cfg.prefab);            
+            var missle = state.EntityManager.Instantiate(cfg.prefab);
             state.EntityManager.SetComponentData(missle, new LocalTransform
             {
                 Position = fromPoint,
-                Rotation = quaternion.identity,
+                Rotation = quaternion.LookRotation(delta, new float3(0, 1, 0)),
                 Scale = 1
             });
             var current = state.EntityManager.GetComponentData<Missile>(missle);
