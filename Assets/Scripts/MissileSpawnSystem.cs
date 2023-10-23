@@ -29,6 +29,9 @@ public partial struct MissileSpawnSystem : ISystem
                 Rotation = quaternion.identity,
                 Scale = 1
             });
+            var current = state.EntityManager.GetComponentData<Missile>(missle);
+            current.direction = Vector3.fwd;
+            state.EntityManager.SetComponentData(missle, current);
         }
     }
 }

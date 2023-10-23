@@ -6,6 +6,7 @@ using UnityEngine;
 public class MissileAuthoring : MonoBehaviour
 {
     public float speed;
+    public float LiveTime;
     class Baker : Baker<MissileAuthoring>
     {
         public override void Bake(MissileAuthoring authoring)
@@ -14,8 +15,8 @@ public class MissileAuthoring : MonoBehaviour
             var entity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent(entity, new Missile
             {
-
                 speed = authoring.speed,
+                AliveTime = authoring.LiveTime,
             });
         }
     }
@@ -23,5 +24,7 @@ public class MissileAuthoring : MonoBehaviour
 
 public struct Missile : IComponentData
 {
+    public float AliveTime;
     public float speed;
+    public Vector3 direction;
 }

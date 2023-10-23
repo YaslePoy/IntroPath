@@ -33,8 +33,10 @@ public partial struct MissleJob : IJobEntity
 
     void Execute(Entity entity, ref LocalTransform transform, ref Missile missle)
     {
-        if (transform.Position.z < 50)
-            transform.Position = transform.Position + new float3(0, 0, missle.speed * DeltaTime);
+        missle.AliveTime -= DeltaTime;
+        if (missle.AliveTime > 0)
+            transform.Position +=  new float3(missle.direction * DeltaTime * missle.speed);
+
         else
             ECB.DestroyEntity(entity);
     }
