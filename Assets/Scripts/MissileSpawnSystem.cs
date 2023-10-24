@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Burst;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
@@ -19,7 +20,7 @@ public partial struct MissileSpawnSystem : ISystem
     public void OnUpdate(ref SystemState state)
     {
         var cfg = SystemAPI.GetSingleton<MissleConfig>();
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             var missle = state.EntityManager.Instantiate(cfg.prefab);
             var spawnPos = SystemAPI.GetComponent<LocalToWorld>(cfg.spawn).Position;
@@ -30,8 +31,13 @@ public partial struct MissileSpawnSystem : ISystem
                 Scale = 1
             });
             var current = state.EntityManager.GetComponentData<Missile>(missle);
-            current.direction = Vector3.fwd;
+            current.direction = Vector3.forward;
             state.EntityManager.SetComponentData(missle, current);
+        }
+        else if (Input.GetKeyUp(KeyCode.R))
+        {
+            var player = SystemAPI.QueryBuilder().WithAll<Player>().Build().ToEntityArray(Allocator.Temp)[0];
+            state.EntityManager.DestroyEntity(player);
         }
     }
 }

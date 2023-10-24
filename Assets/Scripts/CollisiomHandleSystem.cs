@@ -4,7 +4,8 @@ using Unity.Entities;
 using Unity.Physics;
 using UnityEngine;
 
-
+[UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
+[UpdateAfter(typeof(EndFixedStepSimulationEntityCommandBufferSystem))]
 public partial struct CollisionHandleSystem : ISystem
 {
     [BurstCompile]
@@ -31,8 +32,9 @@ public struct CollisionJob : ICollisionEventsJob
     public void Execute(CollisionEvent collisionEvent)
     {
         Debug.Log($"[{DateTime.Now}]CollisionEvent !!!! {collisionEvent.EntityA.Index} and {collisionEvent.EntityB.Index}");
+        //ECB.DestroyEntity(collisionEvent.EntityA);
+        //ECB.DestroyEntity(collisionEvent.EntityB);
         ECB.DestroyEntity(collisionEvent.EntityA);
         ECB.DestroyEntity(collisionEvent.EntityB);
-
     }
 }

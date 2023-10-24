@@ -23,7 +23,8 @@ public partial struct EnemyShootingSystem : ISystem
     {
         if (UnityEngine.Random.value > 0.99)
         {
-            var player = SystemAPI.QueryBuilder().WithAll<Player>().Build().ToEntityArray(Allocator.Temp)[0];
+            var players = SystemAPI.QueryBuilder().WithAll<Player>().Build().ToEntityArray(Allocator.Temp);
+            var player = players[0];
             var enemys = SystemAPI.QueryBuilder().WithAll<Enemy>().Build().ToEntityArray(Allocator.Temp);
             var i = (int)Math.Floor(UnityEngine.Random.value * (enemys.Length - 1));
             var selected = enemys[i];

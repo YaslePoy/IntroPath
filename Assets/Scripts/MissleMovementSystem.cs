@@ -11,6 +11,7 @@ public partial struct MissleMovementSystem : ISystem
     public void OnCreate(ref SystemState state)
     {
         state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
+        state.RequireForUpdate<Missile>();
     }
     [BurstCompile]
     public void OnUpdate(ref SystemState state)
